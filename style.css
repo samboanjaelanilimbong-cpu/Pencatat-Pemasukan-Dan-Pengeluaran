@@ -13,7 +13,6 @@ body {
   color: #54263a;
 }
 
-
 /* ========================= */
 /* HEADER */
 /* ========================= */
@@ -21,7 +20,6 @@ body {
 .header {
   background: #ffffff;
   padding: 25px 30px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,16 +34,12 @@ body {
 .menu-button {
   background: #e93670;
   color: white;
-
   border: none;
   border-radius: 18px;
-
   font-size: 32px;
   padding: 12px 20px;
-
   cursor: pointer;
 }
-
 
 /* ========================= */
 /* HALAMAN */
@@ -61,7 +55,6 @@ body {
   display: block;
 }
 
-
 /* ========================= */
 /* KARTU SALDO */
 /* ========================= */
@@ -69,12 +62,9 @@ body {
 .saldo-card {
   background: #e93670;
   color: white;
-
   border-radius: 25px;
-
   padding: 25px;
   margin-bottom: 25px;
-
   box-shadow: 0 8px 20px rgba(180, 60, 100, 0.2);
 }
 
@@ -88,18 +78,14 @@ body {
   font-size: 32px;
 }
 
-
 /* ========================= */
 /* INPUT NOMINAL */
 /* ========================= */
 
 .input-card {
   background: white;
-
   border-radius: 25px;
-
   padding: 25px;
-
   box-shadow: 0 8px 20px rgba(180, 60, 100, 0.15);
 }
 
@@ -116,11 +102,8 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-
   background: #fff0f5;
-
   border-radius: 15px;
-
   padding: 12px 15px;
 }
 
@@ -130,15 +113,11 @@ body {
 
 .input-rupiah input {
   width: 100%;
-
   border: none;
   outline: none;
-
   background: transparent;
-
   font-size: 20px;
 }
-
 
 /* ========================= */
 /* TOMBOL KATEGORI */
@@ -151,17 +130,12 @@ body {
 
 .kategori button {
   flex: 1;
-
   border: none;
   border-radius: 15px;
-
   padding: 15px 10px;
-
   color: white;
-
   font-size: 15px;
   font-weight: bold;
-
   cursor: pointer;
 }
 
@@ -173,7 +147,6 @@ body {
   background: #e85d75;
 }
 
-
 /* ========================= */
 /* SUB HEADER */
 /* ========================= */
@@ -182,31 +155,24 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-
   margin-bottom: 25px;
 }
 
 .sub-header button {
   width: 60px;
   height: 60px;
-
   border: none;
   border-radius: 18px;
-
   background: white;
-
   font-size: 30px;
-
   cursor: pointer;
 }
 
 .sub-header h2 {
   margin: 0;
-
   color: #d93670;
   font-size: 32px;
 }
-
 
 /* ========================= */
 /* MENU */
@@ -220,51 +186,51 @@ body {
 
 .menu-list button {
   background: white;
-
   border: none;
   border-radius: 20px;
-
   padding: 20px;
-
   text-align: left;
-
   font-size: 18px;
   color: #54263a;
-
   cursor: pointer;
+  box-shadow: 0 5px 15px rgba(180, 60, 100, 0.12); /* Nilai ini ditambahkan kembali dan ditutup dengan benar */
+}
 
-  box-shadow: 
-   
-  #calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-  }
+/* ========================= */
+/* KALENDER GRID */
+/* ========================= */
+
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+#calendar > div {
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #ffe1eb; /* Tambahan sedikit warna agar terlihat bentuk kotaknya */
+}
 
 /* ========================= */
 /* NOTIFIKASI KUSTOM */
 /* ========================= */
+
 .notifikasi-kustom {
   position: fixed;
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #4CAF50; /* Warna Hijau */
+  background-color: #4CAF50;
   color: white;
   padding: 15px 30px;
   border-radius: 25px;
   font-size: 16px;
   font-weight: bold;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  display: none; /* Disembunyikan saat awal */
+  display: none;
   z-index: 9999;
 }
-
-  #calendar > div {
-  min-height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-}
-  
