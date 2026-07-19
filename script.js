@@ -40,14 +40,13 @@ function tambahPemasukan() {
 function tambahPengeluaran() {
   catatTransaksi('pengeluaran');
 }
-alert("Pemasukan Rp " + nominal + " berhasil dicatat!");
 
 function catatTransaksi(jenis) {
   const nominalInput = document.getElementById('nominal');
   const nominal = parseInt(nominalInput.value);
   
   if (!nominal || nominal <= 0) {
-    alert("Masukkan nominal yang valid!");
+    tampilkanNotifikasi("Masukkan nominal yang valid! ❌");
     return;
   }
 
@@ -68,7 +67,9 @@ function catatTransaksi(jenis) {
   updateSaldoTampilan();
   
   nominalInput.value = ""; // Bersihkan kolom input
-  alert((jenis === 'pemasukan' ? "Pemasukan" : "Pengeluaran") + " Rp " + nominal.toLocaleString('id-ID') + " berhasil dicatat!");
+  
+  // Memanggil notifikasi kustom sesuai permintaan
+  tampilkanNotifikasi("Berhasil ditambahkan ✅");
 }
 
 function updateSaldoTampilan() {
@@ -145,7 +146,7 @@ function ubahKalender() {
   const bulan = parseInt(document.getElementById('pilihBulan').value);
   const tahun = parseInt(document.getElementById('pilihTahun').value);
   const calendarDiv = document.getElementById('calendar');
-  const calendarDiv = document.getElementById("calendar");
+  
   calendarDiv.innerHTML = ""; 
 
   // 1. Buat Header Hari (Minggu - Sabtu)
@@ -187,14 +188,19 @@ function ubahKalender() {
     calendarDiv.appendChild(divTanggal);
   }
 }
-// Fungsi untuk memunculkan notifikasi kustom
+
+// ===============================
+// FUNGSI NOTIFIKASI
+// ===============================
 function tampilkanNotifikasi(pesan) {
   const notif = document.getElementById('notifikasiKustom');
-  notif.innerText = pesan;
-  notif.style.display = 'block';
-  
-  // Hilang otomatis setelah 3 detik
-  setTimeout(() => {
-    notif.style.display = 'none';
-  }, 3000);
+  if (notif) {
+    notif.innerText = pesan;
+    notif.style.display = 'block';
+    
+    // Hilang otomatis setelah 3 detik
+    setTimeout(() => {
+      notif.style.display = 'none';
+    }, 3000);
+  }
 }
