@@ -234,3 +234,18 @@ body {
   cursor: pointer;
 
   box-shadow: 
+   
+  #calendarDiv {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+#calendarDiv > div {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+  
