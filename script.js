@@ -144,7 +144,7 @@ function ubahKalender() {
   const bulan = parseInt(document.getElementById('pilihBulan').value);
   const tahun = parseInt(document.getElementById('pilihTahun').value);
   const calendarDiv = document.getElementById('calendar');
-  
+  const calendarDiv = document.getElementById("calendar");
   calendarDiv.innerHTML = ""; 
 
   // 1. Buat Header Hari (Minggu - Sabtu)
