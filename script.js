@@ -165,3 +165,55 @@ function updateDisplay() {
     filteredTransactions.forEach(transaction => {
 
         if (
+            // ===============================
+// FUNGSI NAVIGASI HALAMAN
+// ===============================
+
+// Fungsi untuk menyembunyikan semua halaman
+function sembunyikanSemuaHalaman() {
+  const semuaHalaman = document.querySelectorAll('.page');
+  semuaHalaman.forEach(halaman => {
+    halaman.classList.remove('active');
+  });
+}
+
+// Fungsi membuka halaman menu
+function bukaMenu() {
+  sembunyikanSemuaHalaman();
+  document.getElementById('menu').classList.add('active');
+}
+
+// Fungsi kembali ke halaman utama (Home)
+function kembaliHome() {
+  sembunyikanSemuaHalaman();
+  document.getElementById('home').classList.add('active');
+}
+
+// Fungsi untuk membuka halaman spesifik (Kalender, Pemasukan, Pengeluaran)
+function bukaHalaman(idHalaman) {
+  sembunyikanSemuaHalaman();
+  document.getElementById(idHalaman).classList.add('active');
+}
+
+// ===============================
+// FUNGSI KATEGORI (SEMENTARA)
+// ===============================
+
+function tambahPemasukan() {
+  const nominal = document.getElementById('nominal').value;
+  if (!nominal) {
+    alert("Harap masukkan nominal terlebih dahulu!");
+    return;
+  }
+  alert("Tombol Pemasukan ditekan! Nominal: Rp " + nominal);
+}
+
+function tambahPengeluaran() {
+  const nominal = document.getElementById('nominal').value;
+  if (!nominal) {
+    alert("Harap masukkan nominal terlebih dahulu!");
+    return;
+  }
+  alert("Tombol Pengeluaran ditekan! Nominal: Rp " + nominal);
+}
+
