@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Catatan Keuangan</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <h1>Catatan Keuangan</h1>
+
+    <button
+      class="menu-button"
+      onclick="bukaMenu()">
+
+      ☰
+
+    </button>
+
+  </header>
+
+
+  <!-- ========================= -->
+  <!-- HOME -->
+  <!-- ========================= -->
+
+  <section
+    id="home"
+    class="page active">
+
+    <div class="saldo-card">
+
+      <p>Saldo kamu saat ini</p>
+
+      <h2>
+        Rp <span id="saldo">0</span>
+      </h2>
+
+    </div>
+
+
+    <div class="input-card">
+
+      <h2>Masukkan nominal</h2>
+
+      <div class="input-rupiah">
+
+        <span>Rp</span>
+
+        <input
+          type="number"
+          id="nominal"
+          placeholder="0">
+
+      </div>
+
+
+      <h3>Kategori</h3>
+
+
+      <div class="kategori">
+
+        <button
+          onclick="tambahPemasukan()">
+
+          💰 Pemasukan
+
+        </button>
+
+
+        <button
+          onclick="tambahPengeluaran()">
+
+          💸 Pengeluaran
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- MENU -->
+  <!-- ========================= -->
+
+  <section
+    id="menu"
+    class="page">
+
+    <div class="sub-header">
+
+      <button onclick="kembaliHome()">
+        ←
+      </button>
+
+      <h2>Menu</h2>
+
+    </div>
+
+
+    <div class="menu-list">
+
+      <button
+        onclick="bukaHalaman('kalender')">
+
+        📅 Kalender
+
+      </button>
+
+
+      <button
+        onclick="bukaHalaman('pengeluaran')">
+
+        💸 Pengeluaran
+
+      </button>
+
+
+      <button
+        onclick="bukaHalaman('pemasukan')">
+
+        💰 Pemasukan
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- KALENDER -->
+  <!-- ========================= -->
+
+  <section
+    id="kalender"
+    class="page">
+
+    <div class="sub-header">
+
+      <button onclick="bukaMenu()">
+        ←
+      </button>
+
+      <h2>Kalender</h2>
+
+    </div>
+
+
+    <div class="kalender-card">
+
+
+      <div class="pilihan-tanggal">
+
+
+        <select
+          id="pilihBulan"
+          onchange="ubahKalender()">
+
+          <option value="0">
+            Januari
+          </option>
+
+          <option value="1">
+            Februari
+          </option>
+
+          <option value="2">
+            Maret
+          </option>
+
+          <option value="3">
+            April
+          </option>
+
+          <option value="4">
+            Mei
+          </option>
+
+          <option value="5">
+            Juni
+          </option>
+
+          <option value="6">
+            Juli
+          </option>
+
+          <option value="7">
+            Agustus
+          </option>
+
+          <option value="8">
+            September
+          </option>
+
+          <option value="9">
+            Oktober
+          </option>
+
+          <option value="10">
+            November
+          </option>
+
+          <option value="11">
+            Desember
+          </option>
+
+        </select>
+
+
+        <select
+          id="pilihTahun"
+          onchange="ubahKalender()">
+
+        </select>
+
+
+      </div>
+
+
+      <div id="calendar"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- PENGELUARAN -->
+  <!-- ========================= -->
+
+  <section
+    id="pengeluaran"
+    class="page">
+
+    <div class="sub-header">
+
+      <button onclick="bukaMenu()">
+        ←
+      </button>
+
+      <h2>Pengeluaran</h2>
+
+    </div>
+
+
+    <div
+      id="listPengeluaran"
+      class="list-transaksi">
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- PEMASUKAN -->
+  <!-- ========================= -->
+
+  <section
+    id="pemasukan"
+    class="page">
+
+    <div class="sub-header">
+
+      <button onclick="bukaMenu()">
+        ←
+      </button>
+
+      <h2>Pemasukan</h2>
+
+    </div>
+
+
+    <div
+      id="listPemasukan"
+      class="list-transaksi">
+
+    </div>
+
+  </section>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
