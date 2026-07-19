@@ -40,6 +40,7 @@ function tambahPemasukan() {
 function tambahPengeluaran() {
   catatTransaksi('pengeluaran');
 }
+alert("Pemasukan Rp " + nominal + " berhasil dicatat!");
 
 function catatTransaksi(jenis) {
   const nominalInput = document.getElementById('nominal');
@@ -185,4 +186,15 @@ function ubahKalender() {
 
     calendarDiv.appendChild(divTanggal);
   }
+}
+// Fungsi untuk memunculkan notifikasi kustom
+function tampilkanNotifikasi(pesan) {
+  const notif = document.getElementById('notifikasiKustom');
+  notif.innerText = pesan;
+  notif.style.display = 'block';
+  
+  // Hilang otomatis setelah 3 detik
+  setTimeout(() => {
+    notif.style.display = 'none';
+  }, 3000);
 }
