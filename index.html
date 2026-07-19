@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Catatan Keuangan</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>Catatan Keuangan</h1>
+
+    <button class="menu-btn" onclick="bukaMenu()">☰</button>
+  </header>
+
+
+  <!-- HALAMAN HOME -->
+  <main id="home" class="page active">
+
+    <section class="saldo-card">
+
+      <p>Saldo kamu saat ini</p>
+
+      <h2 id="saldo">Rp 0</h2>
+
+    </section>
+
+
+    <section class="input-card">
+
+      <h2>Masukkan nominal</h2>
+
+      <div class="input-wrapper">
+
+        <span>Rp</span>
+
+        <input
+          type="number"
+          id="nominal"
+          placeholder="0"
+        >
+
+      </div>
+
+
+      <p class="label">Kategori:</p>
+
+      <div class="kategori">
+
+        <button
+          class="btn pemasukan"
+          onclick="tambahPemasukan()"
+        >
+          + Pemasukan
+        </button>
+
+
+        <button
+          class="btn pengeluaran"
+          onclick="tambahPengeluaran()"
+        >
+          - Pengeluaran
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- HALAMAN MENU -->
+  <section id="menu" class="page">
+
+    <div class="menu-card">
+
+      <h2>Menu</h2>
+
+      <button onclick="bukaHalaman('kalender')">
+        📅 Kalender
+      </button>
+
+      <button onclick="bukaHalaman('pengeluaran')">
+        💸 Pengeluaran
+      </button>
+
+      <button onclick="bukaHalaman('pemasukan')">
+        💰 Pemasukan
+      </button>
+
+      <button onclick="kembaliHome()">
+        ← Kembali
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- HALAMAN KALENDER -->
+  <section id="kalender" class="page">
+
+    <div class="sub-header">
+
+      <button onclick="bukaMenu()">←</button>
+
+      <h2>Kalender</h2>
+
+    </div>
+
+
+    <div class="calendar-card">
+
+      <h3 id="bulan">Januari</h3>
+
+      <h4 id="tahun">2026</h4>
+
+      <div id="calendar"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- HALAMAN PENGELUARAN -->
+  <section id="pengeluaran" class="page">
+
+    <div class="sub-header">
+
+      <button onclick="bukaMenu()">←</button>
+
+      <h2>Pengeluaran</h2>
+
+    </div>
+
+
+    <div id="listPengeluaran"></div>
+
+  </section>
+
+
+  <!-- HALAMAN PEMASUKAN -->
+  <section id="pemasukan" class="page">
+
+    <div class="sub-header">
+
+      <button onclick="bukaMenu()">←</button>
+
+      <h2>Pemasukan</h2>
+
+    </div>
+
+
+    <div id="listPemasukan"></div>
+
+  </section>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
