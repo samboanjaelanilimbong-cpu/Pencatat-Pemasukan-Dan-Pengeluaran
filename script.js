@@ -95,7 +95,7 @@ function updateSaldoTampilan() {
 }
 
 // ===============================
-// 4. MENAMPILKAN RIWAYAT TRANSAKSI
+// 4. MENAMPILKAN & MENGHAPUS RIWAYAT
 // ===============================
 function tampilkanRiwayat() {
   const listPemasukan = document.getElementById('listPemasukan');
@@ -109,11 +109,16 @@ function tampilkanRiwayat() {
 
   riwayatTerbaru.forEach(trx => {
     const itemHTML = `
-      <div class="transaksi" style="background: white; padding: 12px 15px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <strong style="font-size: 16px; color: ${trx.jenis === 'pemasukan' ? '#42b883' : '#e85d75'};">
-          ${trx.jenis === 'pemasukan' ? '+' : '-'} Rp ${trx.nominal.toLocaleString('id-ID')}
-        </strong><br>
-        <small style="color: #888;">${trx.tanggal} - Pukul ${trx.waktu}</small>
+      <div class="transaksi-item" style="background: white; padding: 15px; margin-bottom: 12px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(180, 60, 100, 0.08);">
+        <div>
+          <strong style="font-size: 17px; color: ${trx.jenis === 'pemasukan' ? '#42b883' : '#e85d75'}; display: block; margin-bottom: 3px;">
+            ${trx.jenis === 'pemasukan' ? '+' : '-'} Rp ${trx.nominal.toLocaleString('id-ID')}
+          </strong>
+          <small style="color: #888; font-size: 12px;">${trx.tanggal} - Pukul ${trx.waktu}</small>
+        </div>
+        <button onclick="hapusTransaksi(${trx.id})" style="background: #ffe1eb; color: #e85d75; border: none; border-radius: 12px; padding: 8px 12px; cursor: pointer; font-size: 15px; transition: 0.2s;" title="Hapus transaksi">
+          🗑️
+        </button>
       </div>
     `;
     
@@ -123,6 +128,22 @@ function tampilkanRiwayat() {
       listPengeluaran.innerHTML += itemHTML;
     }
   });
+}
+
+// FUNGSI KHUSUS HAPUS TRANSAKSI
+function hapusTransaksi(id) {
+  // Filter array, hilangkan data yang id-nya cocok dengan yang diklik
+  riwayatTransaksi = riwayatTransaksi.filter(trx => trx.id !== id);
+  
+  // Simpan ulang array terbaru ke localStorage
+  localStorage.setItem('riwayatUang', JSON.stringify(riwayatTransaksi));
+  
+  // Perbarui semua tampilan
+  updateSaldoTampilan();
+  tampilkanRiwayat();
+  ubahKalender();
+  
+  tampilkanNotifikasi("Transaksi dihapus 🗑️");
 }
 
 // ===============================
