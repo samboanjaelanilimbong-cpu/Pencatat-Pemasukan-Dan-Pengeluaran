@@ -1,25 +1,21 @@
 // ===============================
 // 1. DATA TRANSAKSI (BUKU BESAR)
 // ===============================
-// Mengambil data tersimpan dari browser atau buat array kosong jika belum ada
 let riwayatTransaksi = JSON.parse(localStorage.getItem('riwayatUang')) || [];
 
 // ===============================
 // 2. NAVIGASI HALAMAN
 // ===============================
 function bukaHalaman(idHalaman) {
-  // Sembunyikan semua halaman
   document.querySelectorAll('.page').forEach(page => {
     page.classList.remove('active');
   });
   
-  // Tampilkan halaman yang dituju
   const halamanTujuan = document.getElementById(idHalaman);
   if (halamanTujuan) {
     halamanTujuan.classList.add('active');
   }
   
-  // Jika membuka halaman Pemasukan/Pengeluaran, otomatis tampilkan daftarnya
   if (idHalaman === 'pemasukan' || idHalaman === 'pengeluaran') {
     tampilkanRiwayat();
   }
@@ -54,7 +50,6 @@ function catatTransaksi(jenis) {
     return;
   }
 
-  // Catat transaksi dengan tanggal dan jam saat ini
   const tanggalSekarang = new Date();
   const catatanBaru = {
     id: Date.now(),
@@ -64,17 +59,11 @@ function catatTransaksi(jenis) {
     waktu: tanggalSekarang.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
   };
 
-  // Simpan ke array dan memori browser (localStorage)
   riwayatTransaksi.push(catatanBaru);
   localStorage.setItem('riwayatUang', JSON.stringify(riwayatTransaksi));
 
-  // Update saldo di layar utama
   updateSaldoTampilan();
-  
-  // Kosongkan kolom input nominal
   nominalInput.value = ""; 
-  
-  // Tampilkan notifikasi kustom centang hijau
   tampilkanNotifikasi("Berhasil ditambahkan ✅");
 }
 
@@ -104,7 +93,6 @@ function tampilkanRiwayat() {
   if (listPemasukan) listPemasukan.innerHTML = "";
   if (listPengeluaran) listPengeluaran.innerHTML = "";
 
-  // Urutkan agar transaksi terbaru muncul paling atas
   const riwayatTerbaru = [...riwayatTransaksi].reverse();
 
   riwayatTerbaru.forEach(trx => {
@@ -116,7 +104,7 @@ function tampilkanRiwayat() {
           </strong>
           <small style="color: #888; font-size: 12px;">${trx.tanggal} - Pukul ${trx.waktu}</small>
         </div>
-        <button onclick="hapusTransaksi(${trx.id})" style="background: #ffe1eb; color: #e85d75; border: none; border-radius: 12px; padding: 8px 12px; cursor: pointer; font-size: 15px; transition: 0.2s;" title="Hapus transaksi">
+        <button onclick="hapusTransaksi(${trx.id})" style="background: #ffe1eb; color: #e85d75; border: none; border-radius: 12px; padding: 8px 12px; cursor: pointer; font-size: 15px;" title="Hapus transaksi">
           🗑️
         </button>
       </div>
@@ -130,15 +118,10 @@ function tampilkanRiwayat() {
   });
 }
 
-// FUNGSI KHUSUS HAPUS TRANSAKSI
 function hapusTransaksi(id) {
-  // Filter array, hilangkan data yang id-nya cocok dengan yang diklik
   riwayatTransaksi = riwayatTransaksi.filter(trx => trx.id !== id);
-  
-  // Simpan ulang array terbaru ke localStorage
   localStorage.setItem('riwayatUang', JSON.stringify(riwayatTransaksi));
   
-  // Perbarui semua tampilan
   updateSaldoTampilan();
   tampilkanRiwayat();
   ubahKalender();
@@ -147,10 +130,9 @@ function hapusTransaksi(id) {
 }
 
 // ===============================
-// 5. KALENDER GRID & RINGKASAN ANGKA
+// 5. KALENDER GRID & SALDO AKHIR HARIAN
 // ===============================
 document.addEventListener('DOMContentLoaded', () => {
-  // Isi dropdown tahun secara otomatis
   const selectTahun = document.getElementById('pilihTahun');
   if (selectTahun) {
     const tahunSekarang = new Date().getFullYear();
@@ -163,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   
-  // Set bulan saat ini pada dropdown
   const selectBulan = document.getElementById('pilihBulan');
   if (selectBulan) {
     selectBulan.value = new Date().getMonth(); 
@@ -199,14 +180,12 @@ function ubahKalender() {
   const hariPertama = new Date(tahun, bulan, 1).getDay(); 
   const jumlahHari = new Date(tahun, bulan + 1, 0).getDate();
 
-  // Kotak kosong penyeimbang hari pertama
   for (let i = 0; i < hariPertama; i++) {
     let divKosong = document.createElement('div');
     divKosong.style.background = "transparent";
     calendarDiv.appendChild(divKosong);
   }
 
-  // Cetak tanggal beserta rekap nominal transaksi
   for (let i = 1; i <= jumlahHari; i++) {
     let divTanggal = document.createElement('div');
     divTanggal.style.display = "flex";
@@ -217,12 +196,12 @@ function ubahKalender() {
 
     let teksTanggal = `<span style="font-size: 15px; font-weight: bold; color: #54263a;">${i}</span>`;
     
-    // Cari transaksi pada tanggal ini
     const tglString = new Date(tahun, bulan, i).toLocaleDateString('id-ID');
     const transaksiHariIni = riwayatTransaksi.filter(trx => trx.tanggal === tglString);
     
     if (transaksiHariIni.length > 0) {
       divTanggal.style.border = "2px solid #d93670";
+      divTanggal.style.cursor = "pointer";
       
       let totalMasuk = 0;
       let totalKeluar = 0;
@@ -232,23 +211,23 @@ function ubahKalender() {
         if (trx.jenis === 'pengeluaran') totalKeluar += trx.nominal;
       });
 
-      // Format angka ringkas (+30k, -15k, dll)
+      // Hitung Saldo Akhir Harian
+      const saldoHarian = totalMasuk - totalKeluar;
+
       function ringkasAngka(num) {
         if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'M';
         if (num >= 1000) return (num / 1000).toFixed(0) + 'k';
         return num;
       }
 
-      let teksNominal = "";
-      
-      if (totalMasuk > 0) {
-        teksNominal += `<span style="color: #42b883; font-size: 10px; font-weight: bold; margin-top: 2px;">+${ringkasAngka(totalMasuk)}</span>`;
-      }
-      if (totalKeluar > 0) {
-        teksNominal += `<span style="color: #e85d75; font-size: 10px; font-weight: bold; margin-top: 1px;">-${ringkasAngka(totalKeluar)}</span>`;
-      }
+      let warnaSaldo = saldoHarian >= 0 ? '#42b883' : '#e85d75';
+      let tandaSaldo = saldoHarian > 0 ? '+' : (saldoHarian < 0 ? '-' : '');
+      let teksSaldo = `<span style="color: ${warnaSaldo}; font-size: 10px; font-weight: bold; margin-top: 2px;">${tandaSaldo}${ringkasAngka(Math.abs(saldoHarian))}</span>`;
 
-      divTanggal.innerHTML = teksTanggal + teksNominal;
+      divTanggal.innerHTML = teksTanggal + teksSaldo;
+      
+      // Event saat tanggal ditekan
+      divTanggal.onclick = () => bukaDetailHari(tglString);
     } else {
       divTanggal.innerHTML = teksTanggal;
     }
@@ -258,7 +237,70 @@ function ubahKalender() {
 }
 
 // ===============================
-// 6. NOTIFIKASI KUSTOM TOAST
+// 6. POPUP DETAIL TRANSAKSI HARIAN
+// ===============================
+function bukaDetailHari(tanggal) {
+  const transaksiHariIni = riwayatTransaksi.filter(trx => trx.tanggal === tanggal);
+  if (transaksiHariIni.length === 0) return;
+
+  let modal = document.getElementById('modalDetailHari');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modalDetailHari';
+    modal.style.cssText = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); display: flex; align-items: center;
+      justify-content: center; z-index: 10000; padding: 20px;
+    `;
+    document.body.appendChild(modal);
+  }
+
+  let itemHTML = '';
+  [...transaksiHariIni].reverse().forEach(trx => {
+    itemHTML += `
+      <div style="background: #fff0f5; padding: 12px 15px; margin-bottom: 10px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <strong style="color: ${trx.jenis === 'pemasukan' ? '#42b883' : '#e85d75'}; font-size: 16px;">
+            ${trx.jenis === 'pemasukan' ? '+' : '-'} Rp ${trx.nominal.toLocaleString('id-ID')}
+          </strong><br>
+          <small style="color: #777; font-size: 11px;">Pukul ${trx.waktu} (${trx.jenis})</small>
+        </div>
+        <button onclick="hapusDariModal(${trx.id}, '${tanggal}')" style="background: #ffe1eb; color: #e85d75; border: none; border-radius: 10px; padding: 6px 10px; cursor: pointer; font-size: 14px;">
+          🗑️
+        </button>
+      </div>
+    `;
+  });
+
+  modal.innerHTML = `
+    <div style="background: white; border-radius: 24px; padding: 22px; width: 100%; max-width: 340px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; color: #d93670; font-size: 18px;">Transaksi ${tanggal}</h3>
+        <button onclick="tutupDetailHari()" style="background: #ffe1eb; border: none; border-radius: 50%; width: 30px; height: 30px; font-weight: bold; color: #d93670; cursor: pointer;">✕</button>
+      </div>
+      <div>${itemHTML}</div>
+    </div>
+  `;
+  modal.style.display = 'flex';
+}
+
+function tutupDetailHari() {
+  const modal = document.getElementById('modalDetailHari');
+  if (modal) modal.style.display = 'none';
+}
+
+function hapusDariModal(id, tanggal) {
+  hapusTransaksi(id);
+  const sisaTransaksi = riwayatTransaksi.filter(trx => trx.tanggal === tanggal);
+  if (sisaTransaksi.length > 0) {
+    bukaDetailHari(tanggal);
+  } else {
+    tutupDetailHari();
+  }
+}
+
+// ===============================
+// 7. NOTIFIKASI KUSTOM TOAST
 // ===============================
 function tampilkanNotifikasi(pesan) {
   const notif = document.getElementById('notifikasiKustom');
